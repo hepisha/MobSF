@@ -363,6 +363,6 @@ This repository does not promote unauthorized testing or malicious activity.
 
 ### CyberHepisha
 
-Mobile Security Research • Android Analysis • Cybersecurity Learning
+Chief Operating Officer & Cyber Professional • Mobile Security Research • Android Analysis 
 
 </div>
