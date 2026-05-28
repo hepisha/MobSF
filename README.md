@@ -2,7 +2,7 @@
 
 ## Snaptube APK Analysis using MobSF Framework
 
-### Static • Dynamic • Tracker • Permission • Certificate Analysis
+### Static • Dynamic • Tracker • Permission Framework-MobSF-blue• Certificate Analysis
 
 <div align="center">
 
