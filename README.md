@@ -1,145 +1,368 @@
-# 📱MobSF (Mobile Security Framework) - Mobile Security Analysis — Snaptube APK
-### Using MobSF (Mobile Security Framework) with Docker on Windows
+# 🔐 Mobile Application Security Investigation
+
+## Snaptube APK Analysis using MobSF Framework
+
+### Static • Dynamic • Tracker • Permission • Certificate Analysis
+
+<div align="center">
+
+<img src="https://img.shields.io/badge/Framework-MobSF-blue?style=for-the-badge&logo=android" />
+<img src="https://img.shields.io/badge/Container-Docker-2496ED?style=for-the-badge&logo=docker" />
+<img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows" />
+<img src="https://img.shields.io/badge/Domain-Mobile%20Security-red?style=for-the-badge&logo=shield" />
+<img src="https://img.shields.io/badge/Status-Analysis%20Completed-success?style=for-the-badge" />
+
+<br><br>
+
+> Mobile applications often expose more than functionality — they expose permissions, trackers, behaviors, and attack surfaces.
+> This investigation demonstrates how MobSF can be used to perform professional Android application security analysis.
+
+</div>
 
 ---
 
-## 🔍 About This Project
+# 📌 Overview
 
-This project demonstrates a **static security analysis** of the **Snaptube APK** using **MobSF (Mobile Security Framework)** — an automated, all-in-one mobile application pen-testing and malware analysis framework.
+This repository contains a complete security investigation of the **Snaptube Android APK** using the **Mobile Security Framework (MobSF)** running inside Docker on Windows.
 
-> **Tool Used:** MobSF (mobsf.live)  
-> **Platform:** Windows  
-> **Analysis Type:** Static Analysis  
-> **APK Analyzed:** Snaptubes.NET_20230822.apk (20.28 MB)
+The objective of this analysis was to:
+
+* Perform static security assessment
+* Review dangerous permissions
+* Detect embedded trackers
+* Analyze application components
+* Inspect certificates and signing methods
+* Review network/server communication patterns
+* Understand overall mobile application risk posture
 
 ---
 
-## 🚀 How to Run MobSF using Docker
+# 🧠 What is MobSF?
 
-### Prerequisites
-- Docker Desktop installed on Windows
-- Any APK file to analyze
+**MobSF (Mobile Security Framework)** is an open-source mobile application security testing framework designed for automated Android and iOS application analysis.
 
-### Steps
+It helps security researchers, penetration testers, malware analysts, and developers perform:
 
-**Step 1 — Pull MobSF Docker Image**
+* Static Analysis
+* Dynamic Analysis
+* Malware Analysis
+* API Testing
+* Runtime Monitoring
+* Privacy Assessment
+
+MobSF supports:
+
+* APK / AAB (Android)
+* IPA (iOS)
+* APPX (Windows Mobile)
+
+---
+
+# ⚙️ How MobSF Works
+
+## 🔍 Static Analysis
+
+Static analysis is performed without executing the application.
+
+MobSF extracts and analyzes:
+
+* AndroidManifest.xml
+* classes.dex
+* permissions
+* trackers
+* signing certificates
+* embedded URLs
+* API keys
+* exported components
+* third-party SDKs
+
+### Static Analysis Workflow
+
+```text
+APK Upload
+    ↓
+APK Extraction
+    ↓
+Manifest & Code Parsing
+    ↓
+Permission Analysis
+    ↓
+Tracker Detection
+    ↓
+Security Rule Evaluation
+    ↓
+Report Generation
+```
+
+### Static Analysis Helps Identify
+
+* Dangerous permissions
+* Hardcoded secrets
+* Insecure configurations
+* Suspicious SDKs
+* Excessive exported components
+* Privacy risks
+
+---
+
+## 🛰️ Dynamic Analysis
+
+Dynamic analysis is performed while the application is running inside an emulator or monitored environment.
+
+MobSF monitors:
+
+* Runtime behavior
+* API calls
+* Network traffic
+* File access
+* SSL communication
+* System interactions
+
+### Dynamic Analysis Workflow
+
+```text
+Application Launch
+        ↓
+Runtime Instrumentation
+        ↓
+Network Monitoring
+        ↓
+Behavior Analysis
+        ↓
+Threat Observation
+        ↓
+Runtime Report
+```
+
+### Dynamic Analysis Helps Identify
+
+* Live network communication
+* Runtime API behavior
+* SSL pinning bypass attempts
+* Sensitive data leakage
+* Suspicious background activity
+
+---
+
+# 🐳 Running MobSF using Docker
+
+## 📋 Prerequisites
+
+* Docker Desktop
+* Windows 10/11
+* WSL2 Enabled
+* Minimum 4GB RAM
+
+---
+
+## Step 1 — Pull MobSF Docker Image
+
 ```bash
 docker pull opensecurity/mobile-security-framework-mobsf:latest
 ```
 
-**Step 2 — Run MobSF Container**
+---
+
+## Step 2 — Run MobSF Container
+
 ```bash
 docker run -it --rm -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest
 ```
 
-**Step 3 — Open Browser**
+---
+
+## Step 3 — Access Dashboard
+
+```text
+URL: http://localhost:8000
+Username: mobsf
+Password: mobsf
 ```
-http://localhost:8000
-```
-Default credentials: `mobsf / mobsf`
-
-**Step 4 — Upload APK**
-- Click "Upload & Analyze"
-- Drag & Drop your APK file
-- Wait for analysis to complete
 
 ---
 
-## 📊 Analysis Results — Snaptube APK
+## Step 4 — Upload APK
 
-### 🔐 Security Score
-| Metric | Result |
-|--------|--------|
-| Security Score | **35 / 100** ⚠️ |
-| Trackers Detected | **12 / 428** |
-| Activities | 146 |
-| Services | 34 |
-| Receivers | 35 |
-| Providers | 11 |
+1. Open MobSF dashboard
+2. Click “Upload & Analyze”
+3. Upload APK file
+4. Wait for scan completion
+5. Review generated report
 
 ---
 
-### ⚠️ Dangerous Permissions Found
+# 🕵️ Investigation Target
 
-| Permission | Risk Level | Description |
-|------------|-----------|-------------|
-| ACCESS_COARSE_LOCATION | 🔴 Dangerous | Access approximate network-based location |
-| ACCESS_FINE_LOCATION | 🔴 Dangerous | Access precise GPS location |
-| CAMERA | 🔴 Dangerous | Take pictures and videos anytime |
-| GET_TASKS | 🔴 Dangerous | Retrieve running applications |
-
-> These permissions can be misused to track user location and monitor device activity.
-
----
-
-### 🕵️ Trackers Detected (12 total)
-
-| Tracker | Category |
-|---------|----------|
-| AppLovin (MAX and SparkLabs) | Analytics, Profiling, Advertisement |
-| Facebook Analytics | Analytics |
-| Google AdMob | Advertisement |
-| Google Firebase Analytics | Analytics |
-| Google CrashLytics | Crash Reporting |
-| IAB Open Measurement | Identification, Advertisement |
-| Pangle | Advertisement |
-| PubNative | Advertisement |
-| Sensors Analytics | Analytics |
-| Bugly | — |
-
-> 12 trackers found — App heavily tracks user behavior for advertising purposes.
+| Property       | Value                |
+| -------------- | -------------------- |
+| Application    | Snaptube             |
+| Package Name   | com.snaptube.premium |
+| Analysis Type  | Static + Dynamic     |
+| Framework Used | MobSF                |
+| Deployment     | Docker               |
+| Investigator   | CyberHepisha         |
 
 ---
 
-### 🌍 Server Locations
-- App communicates with servers in **USA** and **Europe/China**
-- App may communicate with **OFAC sanctioned countries**
+# 📊 Security Assessment Summary
+
+| Category            | Observation |
+| ------------------- | ----------- |
+| Security Score      | 35 / 100    |
+| Trackers Detected   | 12          |
+| Exported Activities | 22          |
+| Exported Services   | 8           |
+| Exported Receivers  | 16          |
+| Exported Providers  | 2           |
+
+The analysis identified multiple areas that may impact user privacy and application security posture.
 
 ---
 
-### 📜 Signer Certificate
-| Field | Value |
-|-------|-------|
-| Signed | ✅ Yes |
-| Signature Type | v1 only (v2/v3/v4 missing — weak!) |
-| Organization | wandoulabs |
-| Location | Beijing, China |
-| Valid From | 2010-09-07 |
-| Valid To | 2060-08-25 |
+# ⚠️ Dangerous Permissions Identified
 
-> ⚠️ Only v1 signature — modern Android security recommends v2/v3/v4
+The application requested several high-risk permissions during analysis.
 
----
+| Permission             | Risk Description                          |
+| ---------------------- | ----------------------------------------- |
+| ACCESS_FINE_LOCATION   | Access to precise GPS location            |
+| ACCESS_COARSE_LOCATION | Access to approximate location            |
+| CAMERA                 | Camera access                             |
+| RECORD_AUDIO           | Microphone access                         |
+| READ_CONTACTS          | Contact data access                       |
+| GET_TASKS              | Access to running application information |
 
-## 🔎 Key Security Findings
-
-1. **Low Security Score (35/100)** — App has multiple security issues
-2. **Dangerous Permissions** — Location, Camera access without clear justification
-3. **Heavy Tracking** — 12 trackers including Facebook, Google, AppLovin
-4. **Weak Signing** — Only v1 signature scheme used
-5. **Server Communication** — Connects to servers in China and USA
-6. **High Tracker Count** — Privacy risk for users
+These permissions should always be evaluated against actual application functionality and necessity.
 
 ---
 
-## 🛠️ Tools & Technologies Used
+# 🧩 Tracker Analysis
 
-- **MobSF** — Mobile Security Framework
-- **Docker** — Container platform
-- **Windows** — Host OS
-- **Static Analysis** — APK reverse engineering
+MobSF identified multiple embedded analytics and advertising trackers.
+
+| Tracker            | Category                |
+| ------------------ | ----------------------- |
+| AppLovin           | Advertising / Analytics |
+| Facebook Analytics | Analytics               |
+| Google AdMob       | Advertising             |
+| Firebase Analytics | Analytics               |
+| Pangle             | Advertisement           |
+| Sensors Analytics  | Behavioral Analytics    |
+| Bugly              | Crash Reporting         |
+
+Trackers may collect:
+
+* Usage analytics
+* Behavioral metrics
+* Device identifiers
+* Advertising data
 
 ---
 
-## 👤 Author
+# 🌍 Network & Server Intelligence
 
-**Hepisha**  
-GitHub: [@hepisha](https://github.com/hepisha)  
-Cybersecurity Enthusiast | Mobile App Security
+The reconnaissance module identified communication endpoints associated with:
+
+* United States
+* Europe
+* Asia-based infrastructure
+
+This helps analysts understand:
+
+* Traffic distribution
+* CDN usage
+* Third-party service communication
+* External infrastructure exposure
 
 ---
 
-## 📄 License
+# 📜 Certificate & Signing Review
 
-This analysis is for **educational purposes only**.  
-MobSF is licensed under GPL-3.0.
+| Finding              | Observation          |
+| -------------------- | -------------------- |
+| Signature Scheme     | v1 detected          |
+| SHA Algorithm        | SHA1                 |
+| Certificate Duration | Long validity period |
+| Signing Information  | Available            |
+
+Older signing schemes and deprecated hashing algorithms should be reviewed carefully during mobile application assessments.
+
+---
+
+# 🧱 Component Exposure Analysis
+
+The APK exposed multiple Android components.
+
+| Component  | Count |
+| ---------- | ----- |
+| Activities | 146   |
+| Services   | 34    |
+| Receivers  | 35    |
+| Providers  | 11    |
+
+Exported components increase the application attack surface and should be validated for secure implementation.
+
+---
+
+# 📸 Analysis Screenshots
+
+## MobSF Dashboard
+
+<img src="./screenshots/dashboard.png" width="100%" />
+
+## Permission Analysis
+
+<img src="./screenshots/permissions.png" width="100%" />
+
+## Tracker Detection
+
+<img src="./screenshots/trackers.png" width="100%" />
+
+## Server Reconnaissance
+
+<img src="./screenshots/recon.png" width="100%" />
+
+---
+
+# 🛠️ Tools & Environment
+
+| Tool           | Purpose                  |
+| -------------- | ------------------------ |
+| MobSF          | Mobile Security Analysis |
+| Docker Desktop | Container Runtime        |
+| Windows 11     | Host Operating System    |
+| GitHub         | Project Hosting          |
+| Chrome Browser | Dashboard Access         |
+
+---
+
+# 📚 References
+
+* MobSF Official Documentation
+* OWASP Mobile Top 10
+* Android Security Best Practices
+* Docker Documentation
+
+---
+
+# ⚖️ Disclaimer
+
+This project was created for:
+
+* Educational purposes
+* Security research
+* Mobile application assessment learning
+
+This repository does not promote unauthorized testing or malicious activity.
+
+---
+
+<div align="center">
+
+## 👨‍💻 Author
+
+### CyberHepisha
+
+Mobile Security Research • Android Analysis • Cybersecurity Learning
+
+</div>
